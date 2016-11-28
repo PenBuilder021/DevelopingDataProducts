@@ -1,0 +1,34 @@
+---
+title: "Developing Data Products Wk2 Project"
+author: "Jaana Y."
+date: "November 26, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+setwd("C:/Users/jtuo1504/Documents/R/DevelopingDataProducts")
+
+```
+
+```{r, warning = FALSE}
+
+library(leaflet)
+
+hauntedNH <- read.csv("hauntedNH.csv", stringsAsFactors = FALSE) ## Data obtained from "http://www.hauntedplaces.org/state/New-Hampshire".
+
+head(hauntedNH)
+
+ghostPNG <- makeIcon(iconUrl = "ghostPNG2.png",
+                     iconWidth = 38, iconHeight = 38,
+                     iconAnchorX = 22, iconAnchorY = 0)
+
+pupContent <- with(hauntedNH, paste(Name, "<br/>", Town,"<br/>", Popup))
+
+
+leaflet(data = hauntedNH) %>%
+  addTiles() %>%
+  addMarkers(lng = ~Longitude, lat = ~Latitude, icon = ghostPNG, popup = pupContent)
+
+```
